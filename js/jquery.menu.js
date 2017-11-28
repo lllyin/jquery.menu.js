@@ -13,16 +13,15 @@
                 speed: "fast"
             }
             config = $.extend(config,arguments[0]);
-
-            var $menuItems = this.children("li");   //菜单第一个选项
             //默认隐藏
-            for(var i = 0,len = $menuItems.length;i<len;i++){
-                var $subItems = $($menuItems[i]).find("ul");
-                console.log($subItems)
-                for(var j = config.showIdx-1;j<config.level-1;j++){
-                    $($subItems[j]).addClass("hide");
-                    $($subItems[j]).parent("li").siblings("li").find("ul").addClass("hide")
+            var idxOfMenu = 0;
+            var currLevelNode = this;
+            while (idxOfMenu<config.level){
+                currLevelNode = currLevelNode.children().find("ul");
+                if(idxOfMenu>=config.showIdx-1){
+                    currLevelNode.hide()
                 }
+                idxOfMenu++;
             }
             //点击显示
             this.find(".sub-title").click(function () {
