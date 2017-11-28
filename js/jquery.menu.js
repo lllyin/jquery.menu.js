@@ -16,6 +16,9 @@
             //默认隐藏
             var idxOfMenu = 0;
             var currLevelNode = this;
+            if(config.showIdx===0){
+                this.hide()
+            }
             while (idxOfMenu<config.level){
                 currLevelNode = currLevelNode.children().find("ul");
                 if(idxOfMenu>=config.showIdx-1){
