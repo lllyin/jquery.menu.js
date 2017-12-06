@@ -13,7 +13,9 @@
             <li>
                 <h1 class="sub-title">lesson1</h1>
                 <ul >
-                    <li>part1</li>
+                    <li>
+                        part1
+                    </li>
                     <li>part2</li>
                     <li>part3</li>
                 </ul>
@@ -103,7 +105,7 @@
     $(function () {
         var $menu = $("[data-role=menu]");
         $menu.menu({
-            showIdx:1,      //默认显示几层菜单
+            showLevel:1,      //默认显示几层菜单
             easing:"slide", //动画
             level:3         //总共有几层菜单
         })

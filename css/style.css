@@ -7,6 +7,10 @@ ul .sub-title, li {
 .menu {
   animation: showSlow 0.5s ease;
   animation-fill-mode: forwards; }
+  .menu li.active > .sub-title {
+    color: red; }
+  .menu li.active2 {
+    color: #2b542c; }
 
 @keyframes showSlow {
   from {

@@ -10,7 +10,15 @@ ul .sub-title,li{
   //display: none;
   animation: showSlow 0.5s ease;
   animation-fill-mode: forwards;
+
+  li.active > .sub-title{
+    color: red;
+  }
+  li.active2{
+    color: #2b542c;
+  }
 }
+
 
 @keyframes showSlow {
   from{
