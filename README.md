@@ -1,11 +1,15 @@
 ## 使用说明
 
-> var $menu = $("[data-role=menu]");
-           $menu.menu({
-               showLevel:1,      //默认显示几层菜单
-               easing:"slide", //动画
-               level:3         //总共有几层菜单
-           })
+`
+var $menu = $("[data-role=menu]");
+$menu.menu({
+   showLevel:1,      //默认显示几层菜单
+   easing:"slide", //动画
+   level:3         //总共有几层菜单
+})
+
+`
+
 
 ````
   /**
