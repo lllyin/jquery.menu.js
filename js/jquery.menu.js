@@ -5,45 +5,76 @@
 (function ($) {
     var lyin = {
         menu:function () {
-            //default config
+            /**
+             * default config
+             *
+             * @type {{showIdx: number, easing: string, level: number, speed: string}}
+             * @param showIdx : 默认显示showIdx级菜单
+             * @param easing : 过度动画
+             * @param level : 一共有多少级菜单，当前菜单级数最大值
+             * @param speed : 执行动画的速度 slow ,fast ,  数字(ms)
+             */
             var config = {
-                showIdx:1,
+                showLevel:1,
                 easing:"slide",
                 level:this.attr("data-level") || 3,
                 speed: "fast"
             }
             config = $.extend(config,arguments[0]);
-            //默认隐藏
+
+            //默认隐藏指定层级
             var idxOfMenu = 0;
             var currLevelNode = this;
-            if(config.showIdx===0){
+            if(config.showLevel===0){
                 this.hide()
             }
             while (idxOfMenu<config.level){
                 currLevelNode = currLevelNode.children().find("ul");
-                if(idxOfMenu>=config.showIdx-1){
-                    currLevelNode.hide()
+                if(idxOfMenu>=config.showLevel-1){
+                    currLevelNode.hide();
+                    currLevelNode.attr("data-level",config.level-2-idxOfMenu)
                 }
                 idxOfMenu++;
             }
-            //点击显示
-            this.find(".sub-title").click(function () {
-                switch (config.easing){
-                    case "slide":
-                        $(this).next("ul").slideToggle(config.speed);
-                        break;
-                    case "fade":
-                        $(this).next("ul").fadeToggle(config.speed);
-                        break;
-                    default:
-                        $(this).next("ul").toggle(config.speed);
-                        break;
 
+
+            //点击显示
+            var easeMethods = function () {
+                console.log("easeMethods:",this);
+                var that = this;
+                var args = arguments;
+                var easeFunc = {
+                    slide:$.fn.slideToggle,
+                    fade:$.fn.fadeToggle
                 }
-                if($(this).parent("li").siblings("li").find("ul").is(":visible")){
-                    $(this).parent("li").siblings("li").find("ul").hide(config.speed)
+                return (typeof easeFunc[config.easing] === "function")
+                    ?
+                    easeFunc[config.easing].apply(that,args)
+                    :
+                    $.fn.toggle.apply(that,args);
+            }
+
+            $.fn.easeMethods = easeMethods;
+
+            //栏目被点击
+            this.find(".sub-title").click(function () {
+
+                $(this).next("ul").easeMethods("fast");
+                $(this).parent("li").toggleClass("active");
+
+                var _$parentLiSiblings = $(this).parent("li").siblings("li");
+                if( _$parentLiSiblings.find("ul").is(":visible")){
+                    _$parentLiSiblings.find("ul").hide(config.speed);
+                    _$parentLiSiblings.removeClass("active");
                 }
             });
+            
+            //菜单最小栏目被点击
+            console.log($("[data-level=0]>li"))
+            $("[data-level=0]>li").click(function (e) {
+                e.stopPropagation();
+                $(this).addClass("active2").siblings("li").removeClass("active2");
+            })
         }
     }
 
